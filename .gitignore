@@ -1,0 +1,16 @@
+# React
+frontend/node_modules
+frontend/dist
+
+# Python
+__pycache__
+*.pyc
+
+# Firebase / variables privadas
+.env
+
+# VSCode
+.vscode
+
+# Sistema
+.DS_Store

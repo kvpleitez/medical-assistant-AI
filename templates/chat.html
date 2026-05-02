@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Asistente de síntomas</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #e0f7f7, #f0fcfc);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .mensaje {
+            margin-bottom: 10px;
+        }
+
+        .usuario {
+            text-align: right;
+            color: #2c3e50;
+        }
+
+        .bot {
+            text-align: left;
+            color: #16a085;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: #7ed6df;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Asistente inteligente</h2>
+
+    <div class="chat-box" id="chat-box">
+        {% if respuesta %}
+            <div class="mensaje bot">{{ respuesta }}</div>
+        {% endif %}
+    </div>
+
+    <form method="POST" action="/sintomas">
+        <input type="text" name="sintomas" placeholder="Escribe tus síntomas..." required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <br>
+    <a href="/">← Volver</a>
+</div>
+
+</body>
+</html>
