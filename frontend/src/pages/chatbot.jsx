@@ -13,7 +13,8 @@ import {
   query,
   orderBy,
   doc,
-  setDoc
+  setDoc,
+  getDoc
 } from "firebase/firestore";
 
 import Sidebar from "../components/Sidebar";
@@ -29,6 +30,9 @@ function Chatbot() {
   const [chats, setChats] = useState([]);
 
   const [chatActual, setChatActual] = useState(null);
+
+  const [perfilUsuario, setPerfilUsuario] = useState(null);
+
   if (!auth.currentUser) {
     return (
       <div className="p-10">
@@ -40,6 +44,7 @@ function Chatbot() {
   // Cargar chats al iniciar
   useEffect(() => {
     cargarChats();
+    cargarPerfil();
   }, []);
 
   const cargarChats = async () => {
@@ -118,7 +123,8 @@ function Chatbot() {
         },
 
         body: JSON.stringify({
-          mensaje: mensaje
+          mensaje: mensaje,
+          perfil: perfilUsuario
         })
       }
     );
@@ -169,6 +175,24 @@ function Chatbot() {
 
     setMensaje("");
   };
+
+    const cargarPerfil = async () => {
+
+      const ref = doc(
+        db,
+        "usuarios",
+        auth.currentUser.uid
+      );
+
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+
+        setPerfilUsuario(
+          snap.data().perfil
+        );
+      }
+    };
 
   return (
 
@@ -237,7 +261,11 @@ function Chatbot() {
                     : "bg-white shadow"
                 }`}
               >
+                <p 
+                className="leading-relaxed"
+                style={{ whiteSpace: "pre-line" }}>
                 {msg.texto}
+                </p>
               </div>
 
             ))}

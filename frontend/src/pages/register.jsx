@@ -28,8 +28,8 @@ function Register() {
 
       alert("Usuario registrado correctamente");
 
-      navigate("/login");
-
+      navigate("/");
+x
     } catch (error) {
 
       alert(error.message);
@@ -74,7 +74,7 @@ function Register() {
           ¿Ya tienes cuenta?
 
           <Link
-            to="/login"
+            to="/"
             className="text-blue-600 font-bold ml-2"
           >
             Inicia sesión

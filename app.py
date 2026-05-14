@@ -146,9 +146,11 @@ def api_chat():
     data = request.get_json()
 
     texto = data.get("mensaje")
+    
+    perfil = data.get("perfil", {})
 
     try:
-        respuesta = analizar_sintomas(texto)
+        respuesta = analizar_sintomas(texto, perfil)
 
     except Exception as e:
         respuesta = str(e)

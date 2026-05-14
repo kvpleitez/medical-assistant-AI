@@ -6,8 +6,9 @@ frontend/dist
 __pycache__
 *.pyc
 
-# Firebase / variables privadas
+# Variables privadas
 .env
+frontend/.env
 
 # VSCode
 .vscode
