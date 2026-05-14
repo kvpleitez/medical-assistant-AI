@@ -1,28 +1,39 @@
 import os
+from dotenv import load_dotenv
 from ollama import Client
 
-# configurar cliente
+load_dotenv()
+
+api_key = os.getenv("OLLAMA_API_KEY")
+
 client = Client(
     host="https://ollama.com",
     headers={
-        "Authorization": "e27de7a5885746a2a2794b0ec79819a7.BPXwVg39QJL_efNA0QwI5rr8"
+        "Authorization": api_key
     }
 )
 
 def analizar_sintomas(texto):
 
     prompt = f"""
-Eres un asistente médico básico.
+Eres un asistente médico con inteligencia artificial.
 
-Responde de forma clara y ordenada:
-- Usa párrafos cortos
-- No uses símbolos como ** o *
-- Usa frases simples
-- Separa recomendaciones en líneas
+Tu respuesta debe verse profesional, clara y fácil de leer.
 
-Incluye advertencia de consultar a un médico.
+Reglas IMPORTANTES:
+- Responde usando varios párrafos
+- Deja una línea en blanco entre ideas
+- Usa lenguaje sencillo
+- No uses markdown
+- No uses símbolos como * o #
 
-Síntomas: {texto}
+Estructura:
+Posible análisis:
+Recomendaciones:
+Advertencia:
+
+Síntomas:
+{texto}
 """
 
     response = client.chat(
