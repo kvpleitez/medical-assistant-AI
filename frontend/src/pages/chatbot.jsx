@@ -105,7 +105,8 @@ function Chatbot() {
 
     const nuevoMensajeUsuario = {
       tipo: "usuario",
-      texto: mensaje
+      texto: mensaje,
+      fecha: new Date().toLocaleString()
     };
 
     setMensajes(prev => [
@@ -133,7 +134,8 @@ function Chatbot() {
 
     const nuevoMensajeIA = {
       tipo: "ia",
-      texto: data.respuesta
+      texto: data.respuesta,
+      fecha: new Date().toLocaleString()
     };
 
     setMensajes(prev => [
@@ -196,14 +198,14 @@ function Chatbot() {
 
   return (
 
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex bg-gray-100 h-screen overflow-hidden">
       <Sidebar 
         abierto={abierto}
         setAbierto={setAbierto}
       />
 
       {/* Sidebar */}
-      <div className="w-80 bg-white shadow-lg p-4">
+      <div className="w-80 bg-white shadow-lg p-4 h-full overflow-y-auto">
 
         <button
           onClick={nuevoChat}
@@ -231,9 +233,9 @@ function Chatbot() {
       </div>
 
       {/* Chat principal */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col h-screen">
 
-        <div className="bg-white shadow p-4 flex items-center">
+        <div className="bg-white shadow p-4 flex items-center sticky top-0 z-10">
           <button
             onClick={() => setAbierto(true)}
             className="text-3xl"
@@ -264,7 +266,16 @@ function Chatbot() {
                 <p 
                 className="leading-relaxed"
                 style={{ whiteSpace: "pre-line" }}>
-                {msg.texto}
+                <div>
+                  <p className="whitespace-pre-line">
+                    {msg.texto}
+                  </p>
+
+                  <p className="text-xs text-gray-400 mt-2 text-right">
+                    {msg.fecha}
+                  </p>
+                </div>
+
                 </p>
               </div>
 
