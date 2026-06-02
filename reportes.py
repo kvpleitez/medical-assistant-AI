@@ -5,10 +5,15 @@ from reportlab.platypus import (
 )
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter
+from reportlab.platypus import Table, TableStyle
+from reportlab.lib import colors
 from datetime import datetime
 import tempfile
 
-from ollama_modelo import generar_resumen_clinico
+from ollama_modelo import (
+    generar_resumen_clinico,
+    generar_motivo_consulta
+)
 
 def limpiar_texto(texto):
     return (
@@ -16,8 +21,6 @@ def limpiar_texto(texto):
         .replace("&", "&amp;")
         .replace("<", "&lt;")
         .replace(">", "&gt;")
-        .replace("\n", " ")
-        .replace("\r", " ")
     )
 
 def crear_pdf_clinico(consultas, perfil):
@@ -40,13 +43,28 @@ def crear_pdf_clinico(consultas, perfil):
     )
     elementos.append(Spacer(1, 20))
 
-    elementos.append(
-        Paragraph(
-            "Este informe fue generado mediante inteligencia artificial y no reemplaza la evaluación de un médico profesional.",
-            styles["BodyText"]
-        )
+    disclaimer = Table(
+        [[
+            """
+            AVISO IMPORTANTE
+
+            Este informe fue generado mediante inteligencia artificial.
+            No constituye un diagnóstico médico y no sustituye la evaluación de un profesional de la salud.
+            """
+        ]],
+        colWidths=[500]
     )
-    elementos.append(Spacer(1, 20))
+
+    disclaimer.setStyle(
+        TableStyle([
+            ('BOX', (0,0), (-1,-1), 1, colors.black),
+            ('BACKGROUND', (0,0), (-1,-1), colors.lightgrey),
+            ('PADDING', (0,0), (-1,-1), 10),
+        ])
+    )
+
+    elementos.append(disclaimer)
+    elementos.append(Spacer(1,20))
 
     elementos.append(
         Paragraph(
@@ -75,6 +93,52 @@ def crear_pdf_clinico(consultas, perfil):
             styles["BodyText"]
         )
     )
+    
+    elementos.append(Spacer(1, 20))
+    
+    elementos.append(
+        Paragraph(
+            "Antecedentes Personales",
+            styles["Heading1"]
+        )
+    )
+    
+    alergias = perfil.get(
+        "alergias",
+        "No registradas"
+    )
+
+    elementos.append(
+        Paragraph(
+            f"<b>Alergias:</b> {alergias}",
+            styles["BodyText"]
+        )
+    )
+
+    medicamentos = perfil.get(
+        "medicamentos",
+        "No registrados"
+    )
+
+    elementos.append(
+        Paragraph(
+            f"<b>Medicamentos habituales:</b> {medicamentos}",
+            styles["BodyText"]
+        )
+    )
+    
+    enfermedades = perfil.get(
+        "enfermedades",
+        "No registradas"
+    )
+
+    elementos.append(
+        Paragraph(
+            f"<b>Antecedentes médicos:</b> {enfermedades}",
+            styles["BodyText"]
+        )
+    )
+    
 
     elementos.append(Spacer(1, 20))
 
@@ -84,13 +148,16 @@ def crear_pdf_clinico(consultas, perfil):
             ""
         )
 
-        sintomas = limpiar_texto(
+        motivo_consulta = generar_motivo_consulta(
             sintomas_original
+        )
+
+        motivo_consulta = limpiar_texto(
+            motivo_consulta
         )
 
         resumen_clinico = generar_resumen_clinico(
             sintomas_original,
-            {}
         )
 
         print("RESUMEN CLINICO:")
@@ -99,18 +166,24 @@ def crear_pdf_clinico(consultas, perfil):
         respuesta = limpiar_texto(
             resumen_clinico
         )
+        
+        respuesta = respuesta.replace(
+            "\n",
+            "<br/>"
+        )
 
         elementos.append(
             Paragraph("Motivo de consulta", styles["Heading2"])
         )
         elementos.append(
-            Paragraph(sintomas, styles["BodyText"])
+            Paragraph(motivo_consulta, styles["BodyText"])
         )
         elementos.append(Spacer(1, 15))
 
         elementos.append(
             Paragraph("Análisis generado por IA", styles["Heading2"])
         )
+        
         elementos.append(
             Paragraph(respuesta, styles["BodyText"])
         )
