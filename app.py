@@ -4,9 +4,14 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from datetime import datetime
 import os
+from flask import send_file
+from reportes import crear_pdf_clinico
 
 # importar IA (nuevo)
-from ollama_modelo import analizar_sintomas
+from ollama_modelo import (
+    analizar_sintomas,
+    generar_reporte_ia
+)
 
 app = Flask(__name__)
 CORS(app)
@@ -158,7 +163,52 @@ def api_chat():
     return jsonify({
         "respuesta": respuesta
     })
-    
+
+@app.route("/api/reporte", methods=["POST"])
+def generar_reporte():
+
+    data = request.json
+
+    historial = data.get("historial", [])
+
+    respuesta = generar_reporte_ia(historial)
+
+    return jsonify({
+        "reporte": respuesta
+    })
+
+@app.route("/api/reporte-pdf", methods=["POST"])
+def reporte_pdf():
+
+    try:
+
+        data = request.json
+
+        print(data)
+
+        consultas = data.get("consultas", [])
+        
+        perfil = data.get("perfil", {})
+
+        archivo = crear_pdf_clinico(consultas, perfil)
+
+        return send_file(
+            archivo,
+            as_attachment=True,
+            download_name="reporte_clinico.pdf"
+        )
+
+    except Exception as e:
+
+        print("ERROR PDF:", e)
+
+        return jsonify({
+            "error": str(e)
+        }), 500
+    print("CONSULTAS RECIBIDAS:")
+    print(consultas)
+    print(type(consultas))
+
 @app.route("/api/monitor", methods=["POST"])
 def monitor():
 

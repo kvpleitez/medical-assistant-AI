@@ -75,6 +75,13 @@ function Sidebar({ abierto, setAbierto }) {
             📑 Perfil Médico
           </Link>
 
+          <Link 
+            to="/historial"
+            className="bg-gray-100 p-4 rounded-xl hover:bg-gray-200 transition"
+            >
+            🩺 Historial Médico
+          </Link>
+
           <button
             onClick={cerrarSesion}
             className="bg-red-500 text-white p-4 rounded-xl hover:bg-red-600 transition mt-10"

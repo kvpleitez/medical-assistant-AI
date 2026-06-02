@@ -104,3 +104,115 @@ Advertencias:
     return respuesta
 
     return response["message"]["content"]
+
+#Función para generar report
+def generar_reporte_ia(historial):
+
+    prompt = f"""
+Eres un sistema profesional de análisis médico con inteligencia artificial.
+
+Tu tarea es generar un informe clínico automatizado basado en el historial del usuario.
+
+IMPORTANTE:
+- NO respondas como chat
+- NO uses frases conversacionales
+- NO uses expresiones como:
+  "okay"
+  "aquí tienes"
+  "espero que te sirva"
+- NO hagas introducciones informales
+- NO uses markdown
+- NO uses asteriscos
+- NO uses símbolos como # o **
+- NO uses listas con viñetas
+- Usa lenguaje profesional y humano
+- Usa títulos simples
+- Mantén formato limpio y ordenado
+- Usa párrafos cortos
+- Usa enumeraciones normales únicamente cuando sea necesario
+
+Estructura obligatoria:
+
+Resumen general:
+texto
+
+Síntomas frecuentes:
+texto
+
+Patrones identificados:
+texto
+
+Posibles riesgos:
+texto
+
+Recomendaciones generales:
+1. texto
+2. texto
+3. texto
+
+Advertencia:
+texto breve
+
+El reporte debe sentirse como un informe clínico profesional generado automáticamente.
+
+Historial del usuario:
+{historial}
+"""
+
+    response = client.chat(
+        model="gemma3:4b-cloud",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+    )
+
+    return response["message"]["content"]
+
+def generar_resumen_clinico(
+    sintomas,
+    perfil
+):
+    prompt = f"""
+Actúa como un sistema de documentación clínica.
+
+Redacta un informe médico profesional e impersonal.
+
+No hables al paciente.
+No uses "tú", "usted" ni recomendaciones directas.
+No uses saludos.
+No uses listas.
+
+Información del paciente:
+{perfil}
+
+Motivo de consulta:
+{sintomas}
+
+Genera únicamente:
+
+Padecimiento actual:
+(descripción clínica)
+
+Impresión diagnóstica:
+(hipótesis clínica presuntiva)
+
+Redacción formal y profesional.
+Máximo 200 palabras.
+"""
+    response = client.chat(
+        model="gemma3:4b-cloud",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+    
+    respuesta = response["message"]["content"]
+
+    # limpiar markdown y símbolos
+    respuesta = respuesta.replace("*", "")
+    respuesta = respuesta.replace("#", "")
+
+    return respuesta

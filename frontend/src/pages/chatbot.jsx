@@ -132,6 +132,24 @@ function Chatbot() {
 
     const data = await response.json();
 
+    await addDoc(
+      collection(
+        db,
+        "usuarios",
+        auth.currentUser.uid,
+        "consultas"
+      ),
+      {
+        fecha: new Date(),
+
+        sintomas: mensaje,
+
+        respuestaIA: data.respuesta,
+
+        chatId: idChat
+      }
+    );
+
     const nuevoMensajeIA = {
       tipo: "ia",
       texto: data.respuesta,

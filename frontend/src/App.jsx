@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import Chatbot from "./pages/chatbot";
 import Monitor from "./pages/monitor";
 import Profile from "./pages/profile";
+import Historial from "./pages/historial";
 
 function App() {
 
@@ -26,6 +27,8 @@ function App() {
         <Route path="/monitor" element={<Monitor />} />
 
         <Route path="/profile" element={<Profile />} />
+
+        <Route path="/historial" element={<Historial />} />
 
       </Routes>
 
