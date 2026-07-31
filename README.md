@@ -1,197 +1,268 @@
-# Asistente Médico con Inteligencia Artificial
+# 🩺 Asistente Médico con Inteligencia Artificial
 
-Proyecto desarrollado con Python, Flask, React y Firebase enfocado en asistencia médica inteligente, monitoreo de salud y experiencia personalizada para cada usuario.
+Aplicación web desarrollada con **React, Flask, Firebase y Machine Learning** que integra un asistente médico impulsado por inteligencia artificial para brindar orientación básica en salud, monitorear signos vitales y gestionar información médica personalizada de cada usuario.
 
-## Descripción del proyecto
-
-Este proyecto consiste en un asistente médico impulsado por inteligencia artificial capaz de:
-
-* Analizar síntomas mediante IA
-* Mantener conversaciones tipo chatbot
-* Guardar historial de conversaciones por usuario
-* Gestionar perfiles médicos personalizados
-* Monitorear signos vitales
-* Generar recomendaciones básicas de salud
-* Personalizar respuestas según el perfil médico del paciente
-
-El sistema fue desarrollado como proyecto académico para la materia de Inteligencia Artificial con Python.
+> **Nota:** Este proyecto fue desarrollado con fines académicos y educativos. Las recomendaciones proporcionadas por el asistente no sustituyen la opinión de un profesional de la salud.
 
 ---
 
-# Tecnologías utilizadas
-
-## Backend
-
-* Python
-* Flask
-* Scikit-learn
-* Ollama Cloud
-* Pandas
+# 🚀 Tecnologías utilizadas
 
 ## Frontend
 
-* React
-* Vite
-* Tailwind CSS
+- React
+- Vite
+- CSS
+
+## Backend
+
+- Python
+- Flask
+- Flask-CORS
 
 ## Base de datos y autenticación
 
-* Firebase Authentication
-* Cloud Firestore
+- Firebase Authentication
+- Cloud Firestore
 
-## Modelo de Inteligencia Artificial
+## Inteligencia Artificial
 
-* Gemma 3 4B Cloud
+- Gemma 3 (OpenRouter)
+- Machine Learning con Scikit-learn (Decision Tree)
 
----
+## Otras herramientas
 
-# Funcionalidades principales
-
-## Sistema de autenticación
-
-* Registro de usuarios
-* Inicio de sesión
-* Gestión individual por usuario
-
-## Chatbot médico con IA
-
-* Conversaciones en tiempo real
-* Respuestas estructuradas y fáciles de entender
-* Tono humanizado y empático
-* Explicaciones médicas simplificadas
-
-## Historial de chats
-
-* Chats independientes por usuario
-* Persistencia de conversaciones en Firebase
-* Creación de múltiples conversaciones
-
-## Perfil médico inteligente
-
-Cada usuario puede registrar:
-
-* Nombre
-* Edad
-* Peso
-* Altura
-* Género
-* Tipo de sangre
-* Alergias
-* Enfermedades crónicas
-* Medicamentos frecuentes
-* Contacto de emergencia
-
-La IA utiliza esta información como contexto para personalizar las respuestas médicas.
-
-## Monitoreo de signos vitales
-
-El sistema analiza:
-
-* Temperatura corporal
-* Frecuencia cardíaca
-* Presión sistólica
-
-Mediante un modelo de Machine Learning utilizando DecisionTreeClassifier.
-
-El sistema puede detectar:
-
-* Estado normal
-* Alerta media
-* Alerta alta
-
-Además, genera recomendaciones básicas según el resultado.
+- Pandas
+- OpenPyXL
+- ReportLab
 
 ---
 
-# Arquitectura general
+# ✨ Funcionalidades principales
 
-Frontend desarrollado en React.
-
-El frontend se comunica con Flask mediante API REST.
-
-Flask procesa:
-
-* Peticiones del chatbot
-* Integración con IA
-* Modelo de Machine Learning
-* Procesamiento médico básico
-
-Firebase se utiliza para:
-
-* Autenticación
-* Base de datos
-* Historial de chats
-* Perfiles médicos
+- 🔐 Registro e inicio de sesión mediante Firebase Authentication.
+- 💬 Chatbot médico impulsado por inteligencia artificial.
+- 👤 Gestión de perfiles médicos personalizados.
+- 📊 Monitoreo básico de signos vitales mediante Machine Learning.
+- 📝 Historial de conversaciones por usuario.
+- 📄 Generación de reportes en PDF.
+- 🤖 Respuestas personalizadas utilizando el contexto médico del usuario.
 
 ---
 
-# Estructura del proyecto
+# 🏗️ Arquitectura general
 
-```bash
-PROYECTO/
-│
-├── frontend/
-│   ├── src/
-│   ├── components/
-│   ├── pages/
-│   └── firebase.js
-│
-├── templates/
-│
-├── usuarios/
-│
-├── app.py
-├── asistente_salud.py
-├── ollama_modelo.py
-├── datos_salud.csv
-└── historial_salud.csv
+```text
+                 React + Vite
+                       │
+                 HTTP (REST API)
+                       │
+                       ▼
+                 Flask (Backend)
+        ┌──────────────┼──────────────┐
+        │              │              │
+        ▼              ▼              ▼
+ Chatbot IA      Monitoreo ML     Reportes PDF
+        │
+        ▼
+ Gemma 3 (OpenRouter)
+        │
+        ▼
+ Firebase Authentication
+        │
+        ▼
+ Cloud Firestore
 ```
 
 ---
 
-# Objetivo del proyecto
+# 📁 Estructura del proyecto
 
-El objetivo principal del proyecto es combinar inteligencia artificial, análisis de datos y desarrollo web para crear un sistema médico básico que ayude a orientar a los usuarios de manera más personalizada y accesible.
+```text
+PROYECTO/
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.jsx
+│   │   ├── firebase.js
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+│
+├── templates/
+│   ├── chat.html
+│   ├── index.html
+│   └── usuarios.html
+│
+├── app.py
+├── asistente.py
+├── ollama_modelo.py
+├── reporte.py
+├── datos_salud.csv
+├── historial_salud.csv
+├── requirements.txt
+├── .env.example
+└── README.md
+```
 
-También busca demostrar cómo la IA puede integrarse en soluciones enfocadas en salud digital y experiencia de usuario.
+## Archivos principales
+
+| Archivo | Descripción |
+|----------|-------------|
+| `app.py` | Punto de entrada del backend y definición de las rutas de la API. |
+| `asistente.py` | Lógica principal del asistente médico. |
+| `ollama_modelo.py` | Comunicación con el modelo de lenguaje utilizado por el chatbot. |
+| `reporte.py` | Generación de reportes en PDF. |
+| `frontend/` | Aplicación desarrollada con React y Vite. |
 
 ---
 
-# Enfoque del sistema
+# ⚙️ Instalación
 
-El proyecto integra distintas tecnologías para construir una experiencia médica inteligente y personalizada.
+## 1. Clonar el repositorio
 
-## React
+```bash
+git clone https://github.com/USUARIO/NOMBRE-REPOSITORIO.git
+```
 
-Se utiliza para desarrollar la interfaz visual del sistema, permitiendo una experiencia moderna, dinámica e interactiva para el usuario.
-
-## Flask y Python
-
-Se encargan de la lógica principal del sistema, procesamiento de datos, comunicación con la inteligencia artificial y funcionamiento del monitoreo médico.
-
-## Firebase
-
-Permite gestionar:
-
-* autenticación de usuarios
-* almacenamiento de perfiles médicos
-* historial de chats
-* persistencia de información
-
-## Machine Learning
-
-Se implementa un modelo de clasificación utilizando DecisionTreeClassifier para analizar signos vitales y detectar posibles estados de alerta.
-
-## Ollama + Gemma 3
-
-El chatbot médico utiliza un modelo de inteligencia artificial capaz de interpretar síntomas y responder de manera personalizada, empática y fácil de entender.
+```bash
+cd NOMBRE-REPOSITORIO
+```
 
 ---
 
-# Autora
+## 2. Instalar dependencias del backend
 
-Karla Pleitez
+Se recomienda utilizar un entorno virtual.
 
-Estudiante de Ingeniería en Inteligencia Artificial y Robótica.
+### Windows
 
-Interesada en desarrollar soluciones tecnológicas con impacto social, salud digital e innovación basada en IA.
+```bash
+python -m venv venv
+
+venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+python3 -m venv venv
+
+source venv/bin/activate
+```
+
+Instalar las dependencias:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 3. Instalar dependencias del frontend
+
+```bash
+cd frontend
+
+npm install
+```
+
+---
+
+# 🔑 Variables de entorno
+
+El proyecto utiliza archivos `.env` para almacenar información sensible.
+
+Por motivos de seguridad, estos archivos **no se incluyen** en el repositorio.
+
+Se deben crear utilizando los archivos de ejemplo correspondientes.
+
+## Backend
+
+Crear un archivo:
+
+```text
+.env
+```
+
+Ejemplo:
+
+```env
+OPENROUTER_API_KEY=TU_API_KEY
+```
+
+---
+
+## Frontend
+
+Crear un archivo:
+
+```text
+frontend/.env
+```
+
+Ejemplo:
+
+```env
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+```
+
+> Las credenciales de Firebase y la API Key deben ser proporcionadas por el responsable del proyecto.
+
+---
+
+# ▶️ Ejecutar el proyecto
+
+## Backend
+
+Desde la carpeta raíz:
+
+```bash
+python app.py
+```
+
+---
+
+## Frontend
+
+Desde la carpeta `frontend`:
+
+```bash
+npm run dev
+```
+
+---
+
+Una vez iniciado el proyecto:
+
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:5000`
+
+---
+
+# 🤝 Notas para colaboradores
+
+- Mantener los archivos `.env` fuera del repositorio.
+- No compartir credenciales mediante GitHub.
+- Instalar las dependencias antes de ejecutar el proyecto.
+- Mantener actualizados `requirements.txt` y `package.json` cuando se agreguen nuevas dependencias.
+- Coordinar cualquier cambio relacionado con la lógica del asistente médico para evitar conflictos en el desarrollo.
+
+---
+
+# 📌 Consideraciones
+
+- El asistente proporciona orientación básica basada en inteligencia artificial.
+- El modelo de Machine Learning analiza temperatura corporal, frecuencia cardíaca y presión sistólica para identificar posibles estados de alerta.
+- Las respuestas del chatbot se personalizan utilizando la información registrada en el perfil médico del usuario.
+- El proyecto tiene fines académicos y de aprendizaje, por lo que no debe utilizarse como herramienta de diagnóstico médico profesional.
