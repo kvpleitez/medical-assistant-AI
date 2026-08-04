@@ -89,7 +89,7 @@ Advertencias:
 """
 
     response = client.chat(
-        model="gemma3:4b-cloud",
+        model="gemma4:cloud",
         messages=[
             {"role": "user", "content": prompt}
         ]
@@ -160,7 +160,7 @@ Historial del usuario:
 """
 
     response = client.chat(
-        model="gemma3:4b-cloud",
+        model="gemma4:cloud",
         messages=[
             {
                 "role": "user",
@@ -219,7 +219,7 @@ Extensión máxima: 120 palabras.
 
 """
     response = client.chat(
-        model="gemma3:4b-cloud",
+        model="gemma4:cloud",
         messages=[
             {"role": "user", "content": prompt}
         ]
@@ -273,7 +273,7 @@ Texto del paciente:
 """
 
     response = client.chat(
-        model="gemma3:4b-cloud",
+        model="gemma4:cloud",
         messages=[
             {
                 "role": "user",
